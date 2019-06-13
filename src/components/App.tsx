@@ -17,7 +17,6 @@ interface Props {}
 
 interface State {
   data: Park[];
-  term: string;
   results: Park[];
   visited: Park[];
   selectedPark: {} | null;
@@ -29,7 +28,6 @@ class App extends Component<Props, State> {
 
     this.state = {
       data: [],
-      term: "",
       results: [],
       visited: [],
       selectedPark: null
@@ -50,9 +48,8 @@ class App extends Component<Props, State> {
         </Section>
         <Section sectionClass="search" sectionId="search">
           <SearchBar
-            term={this.state.term}
-            handleInputChange={this.handleInputChange}
             handleFormSubmit={this.handleFormSubmit}
+            handleInputClear={this.handleInputClear}
           />
         </Section>
         <Section sectionClass="result" sectionId="result">
@@ -68,34 +65,19 @@ class App extends Component<Props, State> {
     );
   }
 
-  handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    this.setState({ term: e.currentTarget.value });
-    if (!e.currentTarget.value.length) {
-      this.handleInputClear();
-    }
-  };
-
   handleInputClear = () => {
     this.setState({ results: [] });
   };
 
-  handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!this.state.term.trim().length) {
-      return;
-    }
-
-    const searchTerm = this.state.term.toLowerCase();
+  handleFormSubmit = (term: string) => {
+    const searchTerm = term.toLowerCase();
     const data = this.state.data;
-
     const searchResults = data.filter(item => {
       return (
         item.fullName.toLowerCase().includes(searchTerm) ||
         item.fullStates.toLowerCase().includes(searchTerm)
       );
     });
-
     this.setState({ results: searchResults });
   };
 }
