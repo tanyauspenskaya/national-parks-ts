@@ -16,6 +16,7 @@ interface Props {}
 
 interface State {
   data: [];
+  term: string;
   results: [];
   visited: [];
   selectedPark: {} | null;
@@ -27,6 +28,7 @@ class App extends Component<Props, State> {
 
     this.state = {
       data: [],
+      term: "",
       results: [],
       visited: [],
       selectedPark: null
@@ -46,7 +48,10 @@ class App extends Component<Props, State> {
           <ProgressBar />
         </Section>
         <Section sectionClass="search" sectionId="search">
-          <SearchBar />
+          <SearchBar
+            term={this.state.term}
+            handleInputChange={this.handleInputChange}
+          />
         </Section>
         <Section sectionClass="result" sectionId="result">
           <ResultsList />
@@ -60,6 +65,17 @@ class App extends Component<Props, State> {
       </>
     );
   }
+
+  handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    this.setState({ term: e.currentTarget.value });
+    if (!e.currentTarget.value.length) {
+      this.handleInputClear();
+    }
+  };
+
+  handleInputClear = () => {
+    this.setState({ results: [] });
+  };
 }
 
 export default App;
