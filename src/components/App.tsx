@@ -1,5 +1,6 @@
 import "../styles/main.scss";
 import React, { Component } from "react";
+import { Park } from "../types";
 
 import Header from "./Header/Header";
 import Tagline from "./Tagline/Tagline";
@@ -15,10 +16,10 @@ import firebaseInit from "../firebase/firebase";
 interface Props {}
 
 interface State {
-  data: [];
+  data: Park[];
   term: string;
-  results: [];
-  visited: [];
+  results: Park[];
+  visited: Park[];
   selectedPark: {} | null;
 }
 
@@ -51,6 +52,7 @@ class App extends Component<Props, State> {
           <SearchBar
             term={this.state.term}
             handleInputChange={this.handleInputChange}
+            handleFormSubmit={this.handleFormSubmit}
           />
         </Section>
         <Section sectionClass="result" sectionId="result">
@@ -75,6 +77,26 @@ class App extends Component<Props, State> {
 
   handleInputClear = () => {
     this.setState({ results: [] });
+  };
+
+  handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!this.state.term.trim().length) {
+      return;
+    }
+
+    const searchTerm = this.state.term.toLowerCase();
+    const data = this.state.data;
+
+    const searchResults = data.filter(item => {
+      return (
+        item.fullName.toLowerCase().includes(searchTerm) ||
+        item.fullStates.toLowerCase().includes(searchTerm)
+      );
+    });
+
+    this.setState({ results: searchResults });
   };
 }
 
