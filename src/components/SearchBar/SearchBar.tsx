@@ -4,15 +4,16 @@ import React from "react";
 interface Props {
   term: string;
   handleInputChange(e: React.FormEvent<HTMLInputElement>): void;
+  handleFormSubmit(e: React.FormEvent<HTMLFormElement>): void;
 }
 
 const SearchBar: React.FC<Props> = props => {
-  const { term, handleInputChange } = props;
+  const { term, handleInputChange, handleFormSubmit } = props;
 
   return (
     <>
       <h2 className="search__title">PARK SEARCH</h2>
-      <form className="search__form">
+      <form className="search__form" onSubmit={handleFormSubmit}>
         <input
           type="text"
           className="search__input"
