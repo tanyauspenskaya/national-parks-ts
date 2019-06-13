@@ -1,0 +1,22 @@
+.tagline {
+  margin-bottom: 3.5rem;
+
+  &__title {
+    color: $color-white;
+  }
+  
+  &__subtitle {
+    display: block;
+    color: rgba($color-white, .75);
+  }
+
+  &__quote {
+    color: rgba($color-white, .75);
+  }
+
+  &__quote {
+    &--line {
+      display: block;
+    }
+  }
+}

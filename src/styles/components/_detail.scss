@@ -1,0 +1,162 @@
+.detail {
+
+  &__view {
+    display: flex;
+    max-width: $max-width;
+    margin: 0 auto;
+
+    @media screen and (max-width: 67.5em) {
+      flex-flow: column wrap;
+    }
+  }
+
+  &__title {
+    text-transform: uppercase;
+    margin: 0 0 .2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    button {
+      margin: 0 0 0 .5rem;
+    }
+  }
+
+  &__subtitle {
+    text-transform: uppercase;
+    color: $color-grey;
+    margin-top: 0;
+  }
+  
+  &__image {
+    margin: 2rem 0 0;
+    overflow: hidden;
+
+    @media screen and (max-width: 30em) {
+      margin: 0;
+    }
+
+    img {
+      width: 100%;
+
+      @media screen and (min-width: 67.5em) and (max-width: 87.5em) {
+        width: auto;
+        height: 100%;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    &::before {
+      content: '';
+      display: block;
+      margin: 0 0 0 auto;    
+      width: 4rem;
+      height: .25rem;
+      background-color: $color-green;
+
+      @media screen and (max-width: 67.5em) {
+        width: 100%;
+      }
+    }
+
+    @media screen and (min-width: 67.5em) and (max-width: 87.5em) {
+      height: 15rem;
+    }
+  }
+
+  &__visuals {
+    width: 50%;
+
+    @media screen and (max-width: 67.5em) {
+      order: 1;
+      width: 100%;
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__main {
+    background-color: $color-grey-light;
+    padding: 2rem 2rem 1rem;
+    position: relative;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      right: 100%;
+      background-color: $color-grey-light;
+      z-index: -1;
+
+      @media screen and (max-width: 67.5em) {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 30em) {
+      padding: 2rem 1rem;
+    }
+  }
+
+  &__weather {
+    background-color: $color-white;
+    padding: 2rem 2rem 0;
+
+    @media screen and (max-width: 30em) {
+      padding: 2rem 1rem;
+    }
+  }
+
+  &__map {
+    margin: .25rem 0 0;
+  }
+
+  &__info {
+    display: flex;
+    margin: 1rem 0 0;
+
+    &-item {
+      margin: 0 1.5rem 0 0;
+
+      @media screen and (max-width: 30em) {
+        margin: 0 1rem 0 0;
+      }
+
+      &--nps {
+        margin: 0 0 0 auto;
+      }
+    }
+
+    &-desc {
+      color: $color-grey;
+    }
+
+    &-npslink {
+      display: block;
+      width: $h3;
+      transition: 200ms ease; 
+  
+      &:link,
+      &:visited {
+        color: $color-grey;
+      }
+  
+      &:hover,
+      &:focus {
+        color: $color-green;
+      }
+    }
+  }
+
+  &__paragraph {
+    word-break: break-word;
+  }
+
+}

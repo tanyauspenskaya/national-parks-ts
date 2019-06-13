@@ -1,0 +1,27 @@
+.intro {
+  &__section {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    height: 100vh;
+    background: 
+      linear-gradient(rgba($color-black, 0.75), rgba($color-black, 0.75)), 
+        url(../assets/intro.jpg);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+  &__tagline,
+  &__progress {
+    width: 100%;
+    max-width: $max-width / 1.28;
+    margin: 0 auto;
+  }
+}
+
+.visited {
+  &__title {
+    text-align: center;
+  }
+}

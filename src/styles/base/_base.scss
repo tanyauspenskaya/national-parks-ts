@@ -1,0 +1,92 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  box-sizing: border-box;
+  color: $color-grey-dark;
+}
+
+a {
+  cursor: pointer;
+
+  &:link,
+  &:visited {
+    text-decoration: none;
+    color: $color-white;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+svg {
+  display: block;
+  fill: currentColor;
+}
+
+img {
+  display: block;
+}
+
+h1 {
+	margin-top: calc((#{$baseline} - #{$h1}) + #{$baseline});
+}
+
+h2 {
+	margin-top: calc((#{$baseline} - #{$h2}) + #{$baseline}*2);
+}
+
+h3 {
+	margin-top: calc((#{$baseline} - #{$h3}) + #{$baseline}*2);
+}
+
+h4 {
+	margin-top: calc((#{$baseline} - #{$h4}) + #{$baseline}*2);
+}
+
+h5 {
+	margin-top: calc((#{$baseline} - #{$h5}) + #{$baseline}*2);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin-bottom: $baseline;
+}
+
+p {	
+	margin-bottom: $baseline;
+}
+
+p:last-of-type {	
+	margin-bottom: 0;
+}
+
+::-webkit-input-placeholder { 
+  color: $color-grey;
+}
+::-moz-placeholder { 
+  color: $color-grey;
+}
+:-ms-input-placeholder { 
+  color: $color-grey;
+}
+:-moz-placeholder { 
+  color: $color-grey;
+}
+
+section {
+  padding: 2rem;
+
+  @media screen and (max-width: 30em) {
+    padding: 1rem;
+  }
+}

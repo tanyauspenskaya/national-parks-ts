@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+    
+
+  &__logo {
+    display: block;
+    width: .7rem;
+    color: $color-white;
+    opacity: .75;
+  }
+
+  &__nav {
+    color: rgba($color-white, .75);
+    
+    &-list {
+      display: flex;
+    }
+
+    &-item {
+      display: block;
+
+      &:not(:last-child) {
+        margin: 0 1.4rem 0 0;
+      }
+    }
+
+    &-link {
+      transition: color 300ms ease;
+
+      &:hover,
+      &:focus {
+        color: $color-green;
+      }
+    }
+  }
+}
