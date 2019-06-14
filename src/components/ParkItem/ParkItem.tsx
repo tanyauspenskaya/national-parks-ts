@@ -7,7 +7,9 @@ interface Props {
 }
 
 const ParkItem: React.FC<Props> = ({ park }) => {
-  const bgImageStyle = `linear-gradient(rgba(38,38,38,.8),rgba(38,38,38,.8)), url('')`;
+  const bgImageStyle = `linear-gradient(rgba(38,38,38,.8),rgba(38,38,38,.8)), url(${
+    park.thumbUrl
+  })`;
 
   return (
     <div className="park__item" style={{ backgroundImage: bgImageStyle }}>
