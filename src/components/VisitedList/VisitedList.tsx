@@ -1,8 +1,15 @@
 import React from "react";
 import ParkItem from "../ParkItem/ParkItem";
+import { Park } from "../../types";
 
-const VisitedList: React.FC = () => {
-  const parkList = <ParkItem />;
+interface Props {
+  visited: Park[];
+}
+
+const VisitedList: React.FC<Props> = ({ visited }) => {
+  const parkList = visited.map(park => {
+    return <ParkItem key={park.id} park={park} />;
+  });
 
   return (
     <>
