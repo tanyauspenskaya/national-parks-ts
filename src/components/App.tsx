@@ -53,13 +53,13 @@ class App extends Component<Props, State> {
           />
         </Section>
         <Section sectionClass="result" sectionId="result">
-          <ResultsList />
+          <ResultsList results={this.state.results} />
         </Section>
         <Section sectionClass="detail" sectionId="detail">
           <Detail />
         </Section>
         <Section sectionClass="visited" sectionId="visited">
-          <VisitedList />
+          <VisitedList visited={this.state.visited} />
         </Section>
       </>
     );
