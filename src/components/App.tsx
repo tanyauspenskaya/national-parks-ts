@@ -44,7 +44,10 @@ class App extends Component<Props, State> {
         <Section sectionClass="intro" sectionId="intro">
           <Header />
           <Tagline />
-          <ProgressBar />
+          <ProgressBar
+            visitedParksNumber={this.state.visited.length}
+            totalParksNumber={this.state.data.length}
+          />
         </Section>
         <Section sectionClass="search" sectionId="search">
           <SearchBar

@@ -1,15 +1,23 @@
 import React from "react";
 
-const ProgressBar: React.FC = () => {
+interface ProgressBarProps {
+  visitedParksNumber: number;
+  totalParksNumber: number;
+}
+
+const ProgressBar: React.FC<ProgressBarProps> = ({
+  visitedParksNumber,
+  totalParksNumber
+}) => {
   return (
     <div className="intro__progress progress">
       <div className="progress__box">
         <div className="progress__bar">
-          <p className="progress__value">'visitedParks'</p>
+          <p className="progress__value">{visitedParksNumber}</p>
         </div>
       </div>
       <p className="progress__label">
-        <small>out of 'totalParks' parks visited</small>
+        <small>out of {totalParksNumber} parks visited</small>
       </p>
     </div>
   );
