@@ -53,13 +53,19 @@ class App extends Component<Props, State> {
           />
         </Section>
         <Section sectionClass="result" sectionId="result">
-          <ResultsList results={this.state.results} />
+          <ResultsList
+            results={this.state.results}
+            handleParkSelect={this.handleParkSelect}
+          />
         </Section>
         <Section sectionClass="detail" sectionId="detail">
           <Detail />
         </Section>
         <Section sectionClass="visited" sectionId="visited">
-          <VisitedList visited={this.state.visited} />
+          <VisitedList
+            visited={this.state.visited}
+            handleParkSelect={this.handleParkSelect}
+          />
         </Section>
       </>
     );
@@ -79,6 +85,10 @@ class App extends Component<Props, State> {
       );
     });
     this.setState({ results: searchResults });
+  };
+
+  handleParkSelect = (park: Park) => {
+    this.setState({ selectedPark: park });
   };
 }
 
