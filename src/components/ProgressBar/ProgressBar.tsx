@@ -1,11 +1,11 @@
 import React from "react";
 
-interface ProgressBarProps {
+interface Props {
   visitedParksNumber: number;
   totalParksNumber: number;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({
+const ProgressBar: React.FC<Props> = ({
   visitedParksNumber,
   totalParksNumber
 }) => {

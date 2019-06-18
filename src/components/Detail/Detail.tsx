@@ -1,29 +1,27 @@
 import icon from "../../assets/icons.svg";
 import React from "react";
 import FavButton from "../FavButton/FavButton";
+import { Park } from "../../types";
 
-const Detail: React.FC = () => {
-  const selected = {
-    photoUrl: "",
-    name: "canyon",
-    fullName: "grand canyon",
-    designation: "national Park",
-    description: "some description",
-    states: "AZ, NV",
-    url: "#",
-    weatherInfo: "33"
-  };
+interface Props {
+  selectedPark: Park | null;
+}
+
+const Detail: React.FC<Props> = ({ selectedPark }) => {
+  if (!selectedPark) {
+    return null;
+  }
 
   return (
     <div className="detail__view">
       <div className="detail__visuals">
         <div className="detail__image">
-          <img src={selected.photoUrl} alt={selected.fullName} />
+          <img src={selectedPark.photoUrl} alt={selectedPark.fullName} />
         </div>
         <div className="detail__map">
           {/* <ParkMap 
-              lat={parseInt(selected.lat)}
-              long={parseInt(selected.long)}
+              lat={parseInt(selectedPark.lat)}
+              long={parseInt(selectedPark.long)}
               isMarkerShown
             /> */}
           Park Map
@@ -32,28 +30,28 @@ const Detail: React.FC = () => {
       <div className="detail__content">
         <div className="detail__main">
           <h2 className="detail__title">
-            {selected.name}
+            {selectedPark.name}
             <FavButton />
           </h2>
-          <h4 className="detail__subtitle">{selected.designation}</h4>
-          <p className="detail__paragraph">{selected.description}</p>
+          <h4 className="detail__subtitle">{selectedPark.designation}</h4>
+          <p className="detail__paragraph">{selectedPark.description}</p>
           <div className="detail__info">
             <div className="detail__info-item detail__info-item--temperature">
               {/* <ParkWeather
-                lat={parseInt(selected.lat)}
-                long={parseInt(selected.long)}
+                lat={parseInt(selectedPark.lat)}
+                long={parseInt(selectedPark.long)}
               /> */}
               Park Weather
               <p className="detail__info-desc">Temperature</p>
             </div>
             <div className="detail__info-item detail__info-item--state">
-              <span className="detail__info-val">{selected.states}</span>
+              <span className="detail__info-val">{selectedPark.states}</span>
               <p className="detail__info-desc">State</p>
             </div>
             <div className="detail__info-item detail__info-item--nps">
               <a
                 className="detail__info-npslink"
-                href={selected.url}
+                href={selectedPark.url}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -70,7 +68,7 @@ const Detail: React.FC = () => {
         </div>
         <div className="detail__weather">
           <h4 className="detail__subtitle">Weather info</h4>
-          <p className="detail__paragraph">{selected.weatherInfo}</p>
+          <p className="detail__paragraph">{selectedPark.weatherInfo}</p>
         </div>
       </div>
     </div>
