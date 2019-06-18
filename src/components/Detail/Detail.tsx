@@ -7,9 +7,10 @@ import { Park } from "../../types";
 
 interface Props {
   selectedPark: Park | null;
+  handleFavorite(park: Park): void;
 }
 
-const Detail: React.FC<Props> = ({ selectedPark }) => {
+const Detail: React.FC<Props> = ({ selectedPark, handleFavorite }) => {
   if (!selectedPark) {
     return null;
   }
@@ -32,7 +33,7 @@ const Detail: React.FC<Props> = ({ selectedPark }) => {
         <div className="detail__main">
           <h2 className="detail__title">
             {selectedPark.name}
-            <FavButton />
+            <FavButton park={selectedPark} handleFavorite={handleFavorite} />
           </h2>
           <h4 className="detail__subtitle">{selectedPark.designation}</h4>
           <p className="detail__paragraph">{selectedPark.description}</p>
@@ -42,7 +43,6 @@ const Detail: React.FC<Props> = ({ selectedPark }) => {
                 lat={parseInt(selectedPark.lat)}
                 lng={parseInt(selectedPark.long)}
               />
-              Park Weather
               <p className="detail__info-desc">Temperature</p>
             </div>
             <div className="detail__info-item detail__info-item--state">

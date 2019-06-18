@@ -5,12 +5,22 @@ import { Park } from "../../types";
 interface Props {
   visited: Park[];
   handleParkSelect(park: Park): void;
+  handleFavorite(park: Park): void;
 }
 
-const VisitedList: React.FC<Props> = ({ visited, handleParkSelect }) => {
+const VisitedList: React.FC<Props> = ({
+  visited,
+  handleParkSelect,
+  handleFavorite
+}) => {
   const parkList = visited.map(park => {
     return (
-      <ParkItem key={park.id} park={park} handleParkSelect={handleParkSelect} />
+      <ParkItem
+        key={park.id}
+        park={park}
+        handleParkSelect={handleParkSelect}
+        handleFavorite={handleFavorite}
+      />
     );
   });
 
