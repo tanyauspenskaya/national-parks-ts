@@ -3,17 +3,21 @@ import ParkItem from "../ParkItem/ParkItem";
 import { Park } from "../../types";
 
 interface Props {
-  visited: Park[];
+  appData: { [key: string]: Park };
   handleParkSelect(park: Park): void;
   handleFavorite(park: Park): void;
 }
 
 const VisitedList: React.FC<Props> = ({
-  visited,
+  appData,
   handleParkSelect,
   handleFavorite
 }) => {
-  const parkList = visited.map(park => {
+  const visitedList = Object.values(appData).filter(park => {
+    return park.isFavorite;
+  });
+
+  const parkList = visitedList.map(park => {
     return (
       <ParkItem
         key={park.id}

@@ -1,14 +1,20 @@
 import React from "react";
+import { Park } from "../../types";
 
 interface Props {
-  visitedParksNumber: number;
-  totalParksNumber: number;
+  appData: { [key: string]: Park };
 }
 
-const ProgressBar: React.FC<Props> = ({
-  visitedParksNumber,
-  totalParksNumber
-}) => {
+const ProgressBar: React.FC<Props> = ({ appData }) => {
+  const visitedParksNumber = Object.values(appData).filter(park => {
+    return park.isFavorite;
+  }).length;
+
+  let totalParksNumber: number = 0;
+  Object.values(appData).forEach(park => {
+    totalParksNumber++;
+  });
+
   return (
     <div className="intro__progress progress">
       <div className="progress__box">
