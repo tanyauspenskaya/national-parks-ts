@@ -59,15 +59,20 @@ class App extends Component<Props, State> {
           <ResultsList
             results={this.state.results}
             handleParkSelect={this.handleParkSelect}
+            handleFavorite={this.handleFavorite}
           />
         </Section>
         <Section sectionClass="detail" sectionId="detail">
-          <Detail selectedPark={this.state.selectedPark} />
+          <Detail
+            selectedPark={this.state.selectedPark}
+            handleFavorite={this.handleFavorite}
+          />
         </Section>
         <Section sectionClass="visited" sectionId="visited">
           <VisitedList
             visited={this.state.visited}
             handleParkSelect={this.handleParkSelect}
+            handleFavorite={this.handleFavorite}
           />
         </Section>
       </>
@@ -92,6 +97,49 @@ class App extends Component<Props, State> {
 
   handleParkSelect = (park: Park) => {
     this.setState({ selectedPark: park });
+  };
+
+  handleFavorite = (park: Park) => {
+    park.isFavorite = !park.isFavorite;
+    this.updateDataState(park);
+    this.updateResultsState(park);
+    this.updateVisitedState(park);
+    if (this.state.selectedPark) this.updateStateSelected(park);
+  };
+
+  updateDataState = (favPark: Park) => {
+    const newDataState = this.state.data.map(item => {
+      if (item.id === favPark.id) item.isFavorite = favPark.isFavorite;
+      return item;
+    });
+    this.setState({ data: newDataState });
+  };
+
+  updateResultsState = (favPark: Park) => {
+    const newResultsState = this.state.results.map(item => {
+      if (item.id === favPark.id) item.isFavorite = favPark.isFavorite;
+      return item;
+    });
+    this.setState({ results: newResultsState });
+  };
+
+  updateVisitedState = (favPark: Park) => {
+    let newVisitedState = [];
+    if (favPark.isFavorite) {
+      newVisitedState = [...this.state.visited, favPark];
+      this.setState({ visited: newVisitedState });
+    } else {
+      newVisitedState = this.state.visited.filter(
+        item => item.id !== favPark.id
+      );
+      this.setState({ visited: newVisitedState });
+    }
+  };
+
+  updateStateSelected = (favPark: Park) => {
+    if (this.state.selectedPark && this.state.selectedPark.id === favPark.id) {
+      this.setState({ selectedPark: favPark });
+    }
   };
 }
 
