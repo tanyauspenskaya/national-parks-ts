@@ -1,6 +1,7 @@
 import icon from "../../assets/icons.svg";
 import React from "react";
 import FavButton from "../FavButton/FavButton";
+import ParkMap from "../ParkMap/ParkMap";
 import { Park } from "../../types";
 
 interface Props {
@@ -19,11 +20,11 @@ const Detail: React.FC<Props> = ({ selectedPark }) => {
           <img src={selectedPark.photoUrl} alt={selectedPark.fullName} />
         </div>
         <div className="detail__map">
-          {/* <ParkMap 
-              lat={parseInt(selectedPark.lat)}
-              long={parseInt(selectedPark.long)}
-              isMarkerShown
-            /> */}
+          <ParkMap
+            lat={parseInt(selectedPark.lat)}
+            lng={parseInt(selectedPark.long)}
+            isMarkerShown
+          />
           Park Map
         </div>
       </div>
