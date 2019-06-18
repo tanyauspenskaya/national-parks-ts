@@ -2,6 +2,7 @@ import icon from "../../assets/icons.svg";
 import React from "react";
 import FavButton from "../FavButton/FavButton";
 import ParkMap from "../ParkMap/ParkMap";
+import ParkWeather from "../ParkWeather/ParkWeather";
 import { Park } from "../../types";
 
 interface Props {
@@ -25,7 +26,6 @@ const Detail: React.FC<Props> = ({ selectedPark }) => {
             lng={parseInt(selectedPark.long)}
             isMarkerShown
           />
-          Park Map
         </div>
       </div>
       <div className="detail__content">
@@ -38,10 +38,10 @@ const Detail: React.FC<Props> = ({ selectedPark }) => {
           <p className="detail__paragraph">{selectedPark.description}</p>
           <div className="detail__info">
             <div className="detail__info-item detail__info-item--temperature">
-              {/* <ParkWeather
+              <ParkWeather
                 lat={parseInt(selectedPark.lat)}
-                long={parseInt(selectedPark.long)}
-              /> */}
+                lng={parseInt(selectedPark.long)}
+              />
               Park Weather
               <p className="detail__info-desc">Temperature</p>
             </div>
