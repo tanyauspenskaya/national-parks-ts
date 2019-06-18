@@ -19,7 +19,7 @@ interface State {
   data: Park[];
   results: Park[];
   visited: Park[];
-  selectedPark: {} | null;
+  selectedPark: Park | null;
 }
 
 class App extends Component<Props, State> {
@@ -62,7 +62,7 @@ class App extends Component<Props, State> {
           />
         </Section>
         <Section sectionClass="detail" sectionId="detail">
-          <Detail />
+          <Detail selectedPark={this.state.selectedPark} />
         </Section>
         <Section sectionClass="visited" sectionId="visited">
           <VisitedList
