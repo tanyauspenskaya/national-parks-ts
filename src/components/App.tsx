@@ -104,14 +104,13 @@ class App extends Component<Props, State> {
     this.setState({ results: searchResults });
   };
 
-  handleParkSelect = (park: Park) => {
-    this.setState({ selectedParkId: park.id });
+  handleParkSelect = (id: string) => {
+    this.setState({ selectedParkId: this.state.appData[id].id });
   };
 
-  handleFavorite = (park: Park) => {
-    park.isFavorite = !park.isFavorite;
+  handleFavorite = (id: string) => {
     const updatedMappedData = Object.assign({}, this.state.appData);
-    updatedMappedData[park.id] = park;
+    updatedMappedData[id].isFavorite = !updatedMappedData[id].isFavorite;
     this.setState({ appData: updatedMappedData });
   };
 }

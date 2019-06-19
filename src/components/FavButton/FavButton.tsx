@@ -1,19 +1,23 @@
 import icon from "../../assets/icons.svg";
 import React from "react";
-import { Park } from "../../types";
 
 interface Props {
-  park: Park;
-  handleFavorite(park: Park): void;
+  parkId: string;
+  parkIsFavorite: boolean;
+  handleFavorite(id: string): void;
 }
 
-const FavButton: React.FC<Props> = ({ park, handleFavorite }) => {
-  const btnClass = park.isFavorite ? "green" : "grey";
+const FavButton: React.FC<Props> = ({
+  parkId,
+  parkIsFavorite,
+  handleFavorite
+}) => {
+  const btnClass = parkIsFavorite ? "green" : "grey";
 
   return (
     <button
       className={`park__btn park__btn--${btnClass}`}
-      onClick={() => handleFavorite(park)}
+      onClick={() => handleFavorite(parkId)}
     >
       <svg
         className="park__tree"

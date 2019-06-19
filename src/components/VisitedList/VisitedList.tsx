@@ -4,8 +4,8 @@ import { Park } from "../../types";
 
 interface Props {
   appData: { [key: string]: Park };
-  handleParkSelect(park: Park): void;
-  handleFavorite(park: Park): void;
+  handleParkSelect(id: string): void;
+  handleFavorite(id: string): void;
 }
 
 const VisitedList: React.FC<Props> = ({
@@ -21,7 +21,10 @@ const VisitedList: React.FC<Props> = ({
     return (
       <ParkItem
         key={park.id}
-        park={park}
+        parkId={park.id}
+        parkThumbUrl={park.thumbUrl}
+        parkName={park.name}
+        parkIsFavorite={park.isFavorite}
         handleParkSelect={handleParkSelect}
         handleFavorite={handleFavorite}
       />
