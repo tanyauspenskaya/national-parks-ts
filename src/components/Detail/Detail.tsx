@@ -8,7 +8,7 @@ import { Park } from "../../types";
 interface Props {
   appData: { [key: string]: Park };
   selectedParkId: string | null;
-  handleFavorite(park: Park): void;
+  handleFavorite(id: string): void;
 }
 
 const Detail: React.FC<Props> = ({
@@ -40,7 +40,11 @@ const Detail: React.FC<Props> = ({
         <div className="detail__main">
           <h2 className="detail__title">
             {selectedPark.name}
-            <FavButton park={selectedPark} handleFavorite={handleFavorite} />
+            <FavButton
+              parkId={selectedPark.id}
+              parkIsFavorite={selectedPark.isFavorite}
+              handleFavorite={handleFavorite}
+            />
           </h2>
           <h4 className="detail__subtitle">{selectedPark.designation}</h4>
           <p className="detail__paragraph">{selectedPark.description}</p>
