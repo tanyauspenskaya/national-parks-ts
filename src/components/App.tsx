@@ -16,10 +16,10 @@ import firebaseInit from "../firebase/firebase";
 interface Props {}
 
 interface State {
-  data: Park[];
+  appData: { [key: string]: Park };
+  firebaseData: Park[];
   results: Park[];
-  visited: Park[];
-  selectedPark: Park | null;
+  selectedParkId: string | null;
 }
 
 class App extends Component<Props, State> {
@@ -27,15 +27,17 @@ class App extends Component<Props, State> {
     super(props);
 
     this.state = {
-      data: [],
+      appData: {},
+      firebaseData: [],
       results: [],
-      visited: [],
-      selectedPark: null
+      selectedParkId: null
     };
   }
 
   componentDidMount() {
-    firebaseInit().once("value", snap => this.setState({ data: snap.val() }));
+    firebaseInit().once("value", snap =>
+      this.setState({ firebaseData: snap.val() }, this.mapData)
+    );
   }
 
   render() {
@@ -44,10 +46,7 @@ class App extends Component<Props, State> {
         <Section sectionClass="intro" sectionId="intro">
           <Header />
           <Tagline />
-          <ProgressBar
-            visitedParksNumber={this.state.visited.length}
-            totalParksNumber={this.state.data.length}
-          />
+          <ProgressBar appData={this.state.appData} />
         </Section>
         <Section sectionClass="search" sectionId="search">
           <SearchBar
@@ -64,13 +63,14 @@ class App extends Component<Props, State> {
         </Section>
         <Section sectionClass="detail" sectionId="detail">
           <Detail
-            selectedPark={this.state.selectedPark}
+            appData={this.state.appData}
+            selectedParkId={this.state.selectedParkId}
             handleFavorite={this.handleFavorite}
           />
         </Section>
         <Section sectionClass="visited" sectionId="visited">
           <VisitedList
-            visited={this.state.visited}
+            appData={this.state.appData}
             handleParkSelect={this.handleParkSelect}
             handleFavorite={this.handleFavorite}
           />
@@ -79,14 +79,23 @@ class App extends Component<Props, State> {
     );
   }
 
+  mapData() {
+    const { firebaseData } = this.state;
+    const mappedData: { [key: string]: Park } = {};
+    firebaseData.forEach(park => {
+      mappedData[park.id] = park;
+    });
+
+    this.setState({ appData: mappedData });
+  }
+
   handleInputClear = () => {
     this.setState({ results: [] });
   };
 
   handleFormSubmit = (term: string) => {
     const searchTerm = term.toLowerCase();
-    const data = this.state.data;
-    const searchResults = data.filter(item => {
+    const searchResults = Object.values(this.state.appData).filter(item => {
       return (
         item.fullName.toLowerCase().includes(searchTerm) ||
         item.fullStates.toLowerCase().includes(searchTerm)
@@ -96,50 +105,14 @@ class App extends Component<Props, State> {
   };
 
   handleParkSelect = (park: Park) => {
-    this.setState({ selectedPark: park });
+    this.setState({ selectedParkId: park.id });
   };
 
   handleFavorite = (park: Park) => {
     park.isFavorite = !park.isFavorite;
-    this.updateDataState(park);
-    this.updateResultsState(park);
-    this.updateVisitedState(park);
-    if (this.state.selectedPark) this.updateStateSelected(park);
-  };
-
-  updateDataState = (favPark: Park) => {
-    const newDataState = this.state.data.map(item => {
-      if (item.id === favPark.id) item.isFavorite = favPark.isFavorite;
-      return item;
-    });
-    this.setState({ data: newDataState });
-  };
-
-  updateResultsState = (favPark: Park) => {
-    const newResultsState = this.state.results.map(item => {
-      if (item.id === favPark.id) item.isFavorite = favPark.isFavorite;
-      return item;
-    });
-    this.setState({ results: newResultsState });
-  };
-
-  updateVisitedState = (favPark: Park) => {
-    let newVisitedState = [];
-    if (favPark.isFavorite) {
-      newVisitedState = [...this.state.visited, favPark];
-      this.setState({ visited: newVisitedState });
-    } else {
-      newVisitedState = this.state.visited.filter(
-        item => item.id !== favPark.id
-      );
-      this.setState({ visited: newVisitedState });
-    }
-  };
-
-  updateStateSelected = (favPark: Park) => {
-    if (this.state.selectedPark && this.state.selectedPark.id === favPark.id) {
-      this.setState({ selectedPark: favPark });
-    }
+    const updatedMappedData = Object.assign({}, this.state.appData);
+    updatedMappedData[park.id] = park;
+    this.setState({ appData: updatedMappedData });
   };
 }
 

@@ -6,14 +6,21 @@ import ParkWeather from "../ParkWeather/ParkWeather";
 import { Park } from "../../types";
 
 interface Props {
-  selectedPark: Park | null;
+  appData: { [key: string]: Park };
+  selectedParkId: string | null;
   handleFavorite(park: Park): void;
 }
 
-const Detail: React.FC<Props> = ({ selectedPark, handleFavorite }) => {
-  if (!selectedPark) {
+const Detail: React.FC<Props> = ({
+  appData,
+  selectedParkId,
+  handleFavorite
+}) => {
+  if (!selectedParkId) {
     return null;
   }
+
+  const selectedPark = appData[selectedParkId];
 
   return (
     <div className="detail__view">
