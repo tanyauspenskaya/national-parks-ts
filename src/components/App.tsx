@@ -19,7 +19,7 @@ interface State {
   appData: { [key: string]: Park };
   firebaseData: Park[];
   results: Park[];
-  selectedParkId: string | null;
+  selectedPark: Park | null;
 }
 
 class App extends Component<Props, State> {
@@ -30,7 +30,7 @@ class App extends Component<Props, State> {
       appData: {},
       firebaseData: [],
       results: [],
-      selectedParkId: null
+      selectedPark: null
     };
   }
 
@@ -63,8 +63,7 @@ class App extends Component<Props, State> {
         </Section>
         <Section sectionClass="detail" sectionId="detail">
           <Detail
-            appData={this.state.appData}
-            selectedParkId={this.state.selectedParkId}
+            selectedPark={this.state.selectedPark}
             handleFavorite={this.handleFavorite}
           />
         </Section>
@@ -105,7 +104,7 @@ class App extends Component<Props, State> {
   };
 
   handleParkSelect = (id: string) => {
-    this.setState({ selectedParkId: this.state.appData[id].id });
+    this.setState({ selectedPark: this.state.appData[id] });
   };
 
   handleFavorite = (id: string) => {
