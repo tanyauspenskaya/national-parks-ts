@@ -46,15 +46,16 @@ class SearchBar extends Component<Props, State> {
   }
 
   onInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    this.setState({ term: e.currentTarget.value });
-    if (!e.currentTarget.value.length) {
+    const value = e.currentTarget.value.trim();
+    this.setState({ term: value });
+    if (!value.length) {
       this.props.handleInputClear();
     }
   };
 
   onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (this.state.term.trim().length) {
+    if (this.state.term.length) {
       this.props.handleFormSubmit(this.state.term);
     }
   };
