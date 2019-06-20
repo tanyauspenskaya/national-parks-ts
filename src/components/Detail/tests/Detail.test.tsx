@@ -1,6 +1,27 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import Detail from "../Detail";
+import ParkMap from "../../ParkMap/ParkMap";
+import FavButton from "../../FavButton/FavButton";
+import ParkWeather from "../../ParkWeather/ParkWeather";
+
+jest.mock("../../ParkMap/ParkMap", () => {
+  return function() {
+    return null;
+  };
+});
+
+jest.mock("../../FavButton/FavButton", () => {
+  return function() {
+    return null;
+  };
+});
+
+jest.mock("../../ParkWeather/ParkWeather", () => {
+  return function() {
+    return null;
+  };
+});
 
 const defaultProps = {
   selectedPark: {
@@ -23,7 +44,7 @@ const defaultProps = {
     url: "https://www.nps.gov/blca/index.htm",
     weatherInfo: "Today's Weather: can vary greatly throughout the day."
   },
-  handleFavorite: jest.fn()
+  handleFavorite: () => {}
 };
 
 describe("<Detail />", () => {
@@ -59,18 +80,17 @@ describe("<Detail />", () => {
   describe("children", () => {
     it("<FavButton /> renders as a child", () => {
       const wrapper = shallow(<Detail {...defaultProps} />);
-      expect(wrapper.find("FavButton")).toHaveLength(1);
+      expect(wrapper.find(FavButton)).toHaveLength(1);
     });
 
-    // it("<ParkMap /> renders as a child", () => {
-    //   const wrapper = shallow(<Detail {...defaultProps} />);
-    //   // console.log(wrapper.find(".detail__map").debug());
-    //   expect(wrapper.contains(<ParkMap />)).toBe(true);
-    // });
+    it("<ParkMap /> renders as a child", () => {
+      const wrapper = shallow(<Detail {...defaultProps} />);
+      expect(wrapper.find(ParkMap).exists()).toBe(true);
+    });
 
     it("<ParkWeather /> renders as a child", () => {
       const wrapper = shallow(<Detail {...defaultProps} />);
-      expect(wrapper.find("ParkWeather")).toHaveLength(1);
+      expect(wrapper.find(ParkWeather)).toHaveLength(1);
     });
   });
 });
