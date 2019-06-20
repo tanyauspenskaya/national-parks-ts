@@ -20,13 +20,21 @@ class ParkWeather extends Component<Props, State> {
   }
 
   componentDidMount() {
+    this.fetchData();
+  }
+
+  componentDidUpdate() {
+    this.fetchData();
+  }
+
+  fetchData = () => {
     const { lat, lng } = this.props;
     fetch(`${BASE_URL}lat=${lat}&lon=${lng}&apiKey=${KEY}`)
       .then(res => res.json())
       .then(data =>
         this.setState({ weather: fahrenheitToCelsius(data.main.temp) })
       );
-  }
+  };
 
   render() {
     return <span className="detail__info-val">{this.state.weather}&deg;</span>;
