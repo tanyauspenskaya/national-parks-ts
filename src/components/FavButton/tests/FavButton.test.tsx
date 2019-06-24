@@ -5,7 +5,7 @@ import FavButton from "../FavButton";
 const defaultProps = {
   parkId: "4324B2B4-D1A3-497F-8E6B-27171FAE4DB2",
   parkIsFavorite: true,
-  handleFavorite: jest.fn()
+  handleFavorite: () => {}
 };
 
 describe("<FavButton />", () => {
@@ -24,29 +24,24 @@ describe("<FavButton />", () => {
   });
 
   describe("button", () => {
-    it("`handleFavorite` is invoked when button is clicked", () => {
-      const wrapper = mount(<FavButton {...defaultProps} />);
-      wrapper.find("button").simulate("click");
-      expect(wrapper.prop("handleFavorite")).toHaveBeenCalled();
-    });
-
-    it("`handleFavorite` is called with `parkId` as an argument", () => {
-      const wrapper = mount(<FavButton {...defaultProps} />);
-      wrapper.find("button").simulate("click");
-      expect(wrapper.prop("handleFavorite")).toHaveBeenCalledWith(
-        "4324B2B4-D1A3-497F-8E6B-27171FAE4DB2"
+    it("when clicked, `handleFavorite` is called with `parkId` as an argument", () => {
+      const spy = jest.fn();
+      const wrapper = shallow(
+        <FavButton {...defaultProps} handleFavorite={spy} />
       );
+      wrapper.find("button").simulate("click");
+      expect(spy).toHaveBeenCalledWith("4324B2B4-D1A3-497F-8E6B-27171FAE4DB2");
     });
 
     it("has class of `park__btn--green` when `parkIsFavorite` is true", () => {
-      const wrapper = mount(
+      const wrapper = shallow(
         <FavButton {...defaultProps} parkIsFavorite={true} />
       );
       expect(wrapper.find("button").hasClass("park__btn--green")).toEqual(true);
     });
 
     it("has class of `park__btn--grey` when `parkIsFavorite` is false", () => {
-      const wrapper = mount(
+      const wrapper = shallow(
         <FavButton {...defaultProps} parkIsFavorite={false} />
       );
       expect(wrapper.find("button").hasClass("park__btn--grey")).toEqual(true);
