@@ -25,8 +25,8 @@ const mapOptions = {
 };
 
 interface Props {
-  lat: string;
-  lng: string;
+  lat: number;
+  lng: number;
   isMarkerShown: boolean;
 }
 
@@ -35,21 +35,15 @@ const ParkMap = compose<Props, Props>(
   withScriptjs,
   withGoogleMap
 )(({ lat, lng, isMarkerShown }) => {
-  const latitude = parseInt(lat);
-  const longitude = parseInt(lng);
-
   return (
     <GoogleMap
       defaultZoom={7}
-      defaultCenter={{ latitude, longitude }}
-      center={{ latitude, longitude }}
+      defaultCenter={{ lat, lng }}
+      center={{ lat, lng }}
       defaultOptions={mapOptions}
     >
       {isMarkerShown && (
-        <Marker
-          position={{ latitude, longitude }}
-          options={{ icon: markerIcon }}
-        />
+        <Marker position={{ lat, lng }} options={{ icon: markerIcon }} />
       )}
     </GoogleMap>
   );

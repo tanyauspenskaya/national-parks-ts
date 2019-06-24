@@ -1,17 +1,17 @@
-import "../styles/main.scss";
+import "./styles/main.scss";
 import React, { Component } from "react";
-import { Park } from "../types";
+import { Park } from "./types";
 
-import Header from "./Header/Header";
-import Tagline from "./Tagline/Tagline";
-import ProgressBar from "./ProgressBar/ProgressBar";
-import Section from "./Section/Section";
-import SearchBar from "./SearchBar/SearchBar";
-import ResultsList from "./ResultsList/ResultsList";
-import Detail from "./Detail/Detail";
-import VisitedList from "./VisitedList/VisitedList";
+import Header from "./components/Header/Header";
+import Tagline from "./components/Tagline/Tagline";
+import ProgressBar from "./components/ProgressBar/ProgressBar";
+import Section from "./components/Section/Section";
+import SearchBar from "./components/SearchBar/SearchBar";
+import ResultsList from "./components/ResultsList/ResultsList";
+import Detail from "./components/Detail/Detail";
+import VisitedList from "./components/VisitedList/VisitedList";
 
-import firebaseInit from "../firebase/firebase";
+import firebaseInit from "./firebase/firebase";
 
 interface Props {}
 

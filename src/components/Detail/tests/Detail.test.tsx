@@ -95,12 +95,16 @@ describe("<Detail />", () => {
     describe("<ParkMap />", () => {
       it("`lat` gets passed as props", () => {
         const wrapper = shallow(<Detail {...defaultProps} />);
-        expect(wrapper.find(ParkMap).prop("lat")).toEqual("38.57779869");
+        expect(wrapper.find(ParkMap).prop("lat")).toEqual(
+          parseInt("38.57779869")
+        );
       });
 
       it("`lng` gets passed as props", () => {
         const wrapper = shallow(<Detail {...defaultProps} />);
-        expect(wrapper.find(ParkMap).prop("lng")).toEqual("-107.7242756");
+        expect(wrapper.find(ParkMap).prop("lng")).toEqual(
+          parseInt("-107.7242756")
+        );
       });
     });
 
