@@ -1,15 +1,21 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import ParkItem from "../ParkItem";
+import FavButton from "../../FavButton/FavButton";
+
+jest.mock("../../FavButton/FavButton", () => {
+  return function() {
+    return null;
+  };
+});
 
 const defaultProps = {
-  parkId: "4324B2B4-D1A3-497F-8E6B-27171FAE4DB2",
-  parkThumbUrl:
-    "https://firebasestorage.googleapis.com/v0/b/parks-react.appspot.com/o/ParkPhotos%2FYosemite.jpg?alt=media&token=61467592-6add-4395-ad69-324547c8a422",
-  parkName: "Yosemite",
+  parkId: "BDBD573F-97EF-44E7-A579-471679F2C42A",
+  parkThumbUrl: "https://firebasestorage.googleapis.com/",
+  parkName: "Black Canyon Of The Gunnison",
   parkIsFavorite: true,
-  handleParkSelect: jest.fn(),
-  handleFavorite: jest.fn()
+  handleParkSelect: () => {},
+  handleFavorite: () => {}
 };
 
 describe("<ParkItem />", () => {
@@ -17,20 +23,22 @@ describe("<ParkItem />", () => {
     it("renders with `parkId` as a prop", () => {
       const wrapper = mount(<ParkItem {...defaultProps} />);
       expect(wrapper.prop("parkId")).toStrictEqual(
-        "4324B2B4-D1A3-497F-8E6B-27171FAE4DB2"
+        "BDBD573F-97EF-44E7-A579-471679F2C42A"
       );
     });
 
     it("renders with `parkThumbUrl` as a prop", () => {
       const wrapper = mount(<ParkItem {...defaultProps} />);
       expect(wrapper.prop("parkThumbUrl")).toStrictEqual(
-        "https://firebasestorage.googleapis.com/v0/b/parks-react.appspot.com/o/ParkPhotos%2FYosemite.jpg?alt=media&token=61467592-6add-4395-ad69-324547c8a422"
+        "https://firebasestorage.googleapis.com/"
       );
     });
 
     it("renders with `parkName` as a prop", () => {
       const wrapper = mount(<ParkItem {...defaultProps} />);
-      expect(wrapper.prop("parkName")).toStrictEqual("Yosemite");
+      expect(wrapper.prop("parkName")).toStrictEqual(
+        "Black Canyon Of The Gunnison"
+      );
     });
 
     it("renders with `parkIsFavorite` as a prop", () => {
@@ -39,26 +47,30 @@ describe("<ParkItem />", () => {
     });
   });
 
-  describe("details button", () => {
-    it("`handleParkSelect` is invoked when the button is clicked", () => {
-      const wrapper = mount(<ParkItem {...defaultProps} />);
-      wrapper.find(".park__explore").simulate("click");
-      expect(wrapper.prop("handleParkSelect")).toHaveBeenCalled();
-    });
-
+  describe("`Explore` button", () => {
     it("`handleParkSelect` is called with `parkId` as an argument", () => {
-      const wrapper = mount(<ParkItem {...defaultProps} />);
-      wrapper.find(".park__explore").simulate("click");
-      expect(wrapper.prop("handleParkSelect")).toHaveBeenCalledWith(
-        "4324B2B4-D1A3-497F-8E6B-27171FAE4DB2"
+      const spy = jest.fn();
+      const wrapper = shallow(
+        <ParkItem {...defaultProps} handleParkSelect={spy} />
       );
+      wrapper.find(".park__explore").simulate("click");
+      expect(spy).toHaveBeenCalledWith("BDBD573F-97EF-44E7-A579-471679F2C42A");
     });
   });
 
   describe("<FavButton />", () => {
-    it("renders as a child", () => {
+    it("`parkId` gets passed as props", () => {
       const wrapper = shallow(<ParkItem {...defaultProps} />);
-      expect(wrapper.find("FavButton")).toHaveLength(1);
+      expect(wrapper.find(FavButton).prop("parkId")).toStrictEqual(
+        "BDBD573F-97EF-44E7-A579-471679F2C42A"
+      );
+    });
+
+    it("`parkIsFavorite` gets passed as props", () => {
+      const wrapper = shallow(<ParkItem {...defaultProps} />);
+      expect(wrapper.find(FavButton).prop("parkIsFavorite")).toStrictEqual(
+        true
+      );
     });
   });
 });

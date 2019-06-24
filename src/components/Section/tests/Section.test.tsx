@@ -22,14 +22,14 @@ describe("<Section />", () => {
 
     it("has a class prefix of `sectionClass` prop", () => {
       const wrapper = mount(<Section {...defaultProps} />);
-      expect(wrapper.find("section").hasClass("someClass__section")).toEqual(
-        true
-      );
+      expect(
+        wrapper.find("section").hasClass("someClass__section")
+      ).toStrictEqual(true);
     });
 
     it("has an id of `someId` prop", () => {
       const wrapper = mount(<Section {...defaultProps} />);
-      expect(wrapper.find("#someId").exists()).toEqual(true);
+      expect(wrapper.find("#someId").exists()).toStrictEqual(true);
     });
 
     it("has children if passed in as props", () => {
