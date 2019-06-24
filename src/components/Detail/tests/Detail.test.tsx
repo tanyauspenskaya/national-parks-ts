@@ -102,15 +102,20 @@ describe("<Detail />", () => {
         const wrapper = shallow(<Detail {...defaultProps} />);
         expect(wrapper.find(ParkMap).prop("lng")).toEqual("-107.7242756");
       });
+
+      it("`isMarkerShown` gets passed as a prop", () => {
+        const wrapper = mount(<Detail {...defaultProps} />);
+        expect(wrapper.find(ParkMap).prop("isMarkerShown")).toStrictEqual(true);
+      });
     });
 
     describe("<ParkWeather />", () => {
-      it("`lat` gets passed as props", () => {
+      it("`lat` gets passed as a prop", () => {
         const wrapper = shallow(<Detail {...defaultProps} />);
         expect(wrapper.find(ParkWeather).prop("lat")).toEqual("38.57779869");
       });
 
-      it("`lng` gets passed as props", () => {
+      it("`lng` gets passed as a prop", () => {
         const wrapper = shallow(<Detail {...defaultProps} />);
         expect(wrapper.find(ParkWeather).prop("lng")).toEqual("-107.7242756");
       });

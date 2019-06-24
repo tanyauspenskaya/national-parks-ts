@@ -25,7 +25,7 @@ const Detail: React.FC<Props> = ({ selectedPark, handleFavorite }) => {
           <ParkMap
             lat={selectedPark.lat}
             lng={selectedPark.long}
-            isMarkerShown
+            isMarkerShown={true}
           />
         </div>
       </div>
