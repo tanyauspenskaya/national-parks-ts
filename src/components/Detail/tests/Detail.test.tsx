@@ -78,19 +78,42 @@ describe("<Detail />", () => {
   });
 
   describe("children", () => {
-    it("<FavButton /> renders as a child", () => {
-      const wrapper = shallow(<Detail {...defaultProps} />);
-      expect(wrapper.find(FavButton)).toHaveLength(1);
+    describe("<FavButton />", () => {
+      it("`parkId` gets passed as props", () => {
+        const wrapper = shallow(<Detail {...defaultProps} />);
+        expect(wrapper.find(FavButton).prop("parkId")).toEqual(
+          "BDBD573F-97EF-44E7-A579-471679F2C42A"
+        );
+      });
+
+      it("`parkIsFavorite` gets passed as props", () => {
+        const wrapper = shallow(<Detail {...defaultProps} />);
+        expect(wrapper.find(FavButton).prop("parkIsFavorite")).toEqual(true);
+      });
     });
 
-    it("<ParkMap /> renders as a child", () => {
-      const wrapper = shallow(<Detail {...defaultProps} />);
-      expect(wrapper.find(ParkMap).exists()).toBe(true);
+    describe("<ParkMap />", () => {
+      it("`lat` gets passed as props", () => {
+        const wrapper = shallow(<Detail {...defaultProps} />);
+        expect(wrapper.find(ParkMap).prop("lat")).toEqual("38.57779869");
+      });
+
+      it("`lng` gets passed as props", () => {
+        const wrapper = shallow(<Detail {...defaultProps} />);
+        expect(wrapper.find(ParkMap).prop("lng")).toEqual("-107.7242756");
+      });
     });
 
-    it("<ParkWeather /> renders as a child", () => {
-      const wrapper = shallow(<Detail {...defaultProps} />);
-      expect(wrapper.find(ParkWeather)).toHaveLength(1);
+    describe("<ParkWeather />", () => {
+      it("`lat` gets passed as props", () => {
+        const wrapper = shallow(<Detail {...defaultProps} />);
+        expect(wrapper.find(ParkWeather).prop("lat")).toEqual("38.57779869");
+      });
+
+      it("`lng` gets passed as props", () => {
+        const wrapper = shallow(<Detail {...defaultProps} />);
+        expect(wrapper.find(ParkWeather).prop("lng")).toEqual("-107.7242756");
+      });
     });
   });
 });

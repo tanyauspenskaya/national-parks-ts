@@ -23,8 +23,8 @@ const Detail: React.FC<Props> = ({ selectedPark, handleFavorite }) => {
         </div>
         <div className="detail__map">
           <ParkMap
-            lat={parseInt(selectedPark.lat)}
-            lng={parseInt(selectedPark.long)}
+            lat={selectedPark.lat}
+            lng={selectedPark.long}
             isMarkerShown
           />
         </div>
@@ -43,10 +43,7 @@ const Detail: React.FC<Props> = ({ selectedPark, handleFavorite }) => {
           <p className="detail__paragraph">{selectedPark.description}</p>
           <div className="detail__info">
             <div className="detail__info-item detail__info-item--temperature">
-              <ParkWeather
-                lat={parseInt(selectedPark.lat)}
-                lng={parseInt(selectedPark.long)}
-              />
+              <ParkWeather lat={selectedPark.lat} lng={selectedPark.long} />
               <p className="detail__info-desc">Temperature</p>
             </div>
             <div className="detail__info-item detail__info-item--state">

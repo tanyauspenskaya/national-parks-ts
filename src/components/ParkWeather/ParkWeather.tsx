@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { KEY, BASE_URL } from "./weatherKey";
 
 interface Props {
-  lat: number;
-  lng: number;
+  lat: string;
+  lng: string;
 }
 
 interface State {
@@ -29,7 +29,7 @@ class ParkWeather extends Component<Props, State> {
 
   fetchData = () => {
     const { lat, lng } = this.props;
-    fetch(`${BASE_URL}lat=${lat}&lon=${lng}&apiKey=${KEY}`)
+    fetch(`${BASE_URL}lat=${parseInt(lat)}&lon=${parseInt(lng)}&apiKey=${KEY}`)
       .then(res => res.json())
       .then(data =>
         this.setState({ weather: fahrenheitToCelsius(data.main.temp) })
