@@ -141,13 +141,13 @@ class App extends Component<Props, State> {
   };
 }
 
-const AppRedux = connect(
-  (state: any) => {
-    return {
-      store: state
-    };
-  },
+const mapStateToProps = (state: any) => {
+  return {
+    store: state
+  };
+};
+
+export default connect(
+  mapStateToProps,
   mapDispatchToProps
 )(App);
-
-export default AppRedux;
