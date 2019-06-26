@@ -1,6 +1,6 @@
 import "./styles/main.scss";
 import React, { Component } from "react";
-import { Park } from "./types";
+import { Park, AppData } from "./types";
 
 import Header from "./components/Header/Header";
 import Tagline from "./components/Tagline/Tagline";
@@ -20,8 +20,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     actions: {
       parks: {
-        setData: (payload: { [key: string]: Park }) =>
-          dispatch(setData(payload))
+        setData: (payload: AppData) => dispatch(setData(payload))
       }
     }
   };
@@ -30,16 +29,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 interface Props {
   actions: {
     parks: {
-      setData(payload: { [key: string]: Park }): any;
+      setData(payload: AppData): any;
     };
   };
   store: {
-    parks: { [key: string]: Park };
+    parks: AppData;
   };
 }
 
 interface State {
-  appData: { [key: string]: Park };
+  appData: AppData;
   firebaseData: Park[];
   results: Park[];
   selectedPark: Park | null;
@@ -107,7 +106,7 @@ class App extends Component<Props, State> {
 
   mapData() {
     const { firebaseData } = this.state;
-    const mappedData: { [key: string]: Park } = {};
+    const mappedData: AppData = {};
     firebaseData.forEach(park => {
       mappedData[park.id] = park;
     });

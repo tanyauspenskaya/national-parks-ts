@@ -18,6 +18,10 @@ export interface Park {
   weatherInfo: string;
 }
 
+export interface AppData {
+  [key: string]: Park;
+}
+
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION__: any;
