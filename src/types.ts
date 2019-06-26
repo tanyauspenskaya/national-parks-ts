@@ -17,3 +17,9 @@ export interface Park {
   url: string;
   weatherInfo: string;
 }
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION__: any;
+  }
+}

@@ -12,8 +12,31 @@ import Detail from "./components/Detail/Detail";
 import VisitedList from "./components/VisitedList/VisitedList";
 
 import firebaseInit from "./firebase/firebase";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { setData } from "./actions";
 
-interface Props {}
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    actions: {
+      parks: {
+        setData: (payload: { [key: string]: Park }) =>
+          dispatch(setData(payload))
+      }
+    }
+  };
+};
+
+interface Props {
+  actions: {
+    parks: {
+      setData(payload: { [key: string]: Park }): any;
+    };
+  };
+  store: {
+    parks: { [key: string]: Park };
+  };
+}
 
 interface State {
   appData: { [key: string]: Park };
@@ -41,12 +64,16 @@ class App extends Component<Props, State> {
   }
 
   render() {
+    const {
+      store: { parks }
+    } = this.props;
+
     return (
       <>
         <Section sectionClass="intro" sectionId="intro">
           <Header />
           <Tagline />
-          <ProgressBar appData={this.state.appData} />
+          <ProgressBar appData={parks} />
         </Section>
         <Section sectionClass="search" sectionId="search">
           <SearchBar
@@ -69,7 +96,7 @@ class App extends Component<Props, State> {
         </Section>
         <Section sectionClass="visited" sectionId="visited">
           <VisitedList
-            appData={this.state.appData}
+            appData={parks}
             handleParkSelect={this.handleParkSelect}
             handleFavorite={this.handleFavorite}
           />
@@ -86,6 +113,7 @@ class App extends Component<Props, State> {
     });
 
     this.setState({ appData: mappedData });
+    this.props.actions.parks.setData(mappedData);
   }
 
   handleInputClear = () => {
@@ -104,7 +132,7 @@ class App extends Component<Props, State> {
   };
 
   handleParkSelect = (id: string) => {
-    this.setState({ selectedPark: this.state.appData[id] });
+    this.setState({ selectedPark: this.props.store.parks[id] });
   };
 
   handleFavorite = (id: string) => {
@@ -114,4 +142,13 @@ class App extends Component<Props, State> {
   };
 }
 
-export default App;
+const AppRedux = connect(
+  (state: any) => {
+    return {
+      store: state
+    };
+  },
+  mapDispatchToProps
+)(App);
+
+export default AppRedux;
