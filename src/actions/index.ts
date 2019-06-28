@@ -1,14 +1,26 @@
-import { Park } from "../types";
+import { AppData } from "../types";
 
-export interface Action {
+export interface ActionSet {
   type: string;
-  payload: { [key: string]: Park };
+  payload: AppData;
 }
 
-export const setData = (data: { [key: string]: Park }) => {
+export interface ActionUpdate {
+  type: string;
+  payload: string;
+}
+
+export const setData = (data: AppData) => {
   return {
     type: "SET",
     payload: data
+  };
+};
+
+export const updateData = (id: string) => {
+  return {
+    type: "UPDATE",
+    payload: id
   };
 };
 

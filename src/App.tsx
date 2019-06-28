@@ -14,13 +14,14 @@ import VisitedList from "./components/VisitedList/VisitedList";
 import firebaseInit from "./firebase/firebase";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { setData } from "./actions";
+import { setData, updateData } from "./actions";
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     actions: {
       parks: {
-        setData: (payload: AppData) => dispatch(setData(payload))
+        setData: (payload: AppData) => dispatch(setData(payload)),
+        updateData: (payload: string) => dispatch(updateData(payload))
       }
     }
   };
@@ -30,6 +31,7 @@ interface Props {
   actions: {
     parks: {
       setData(payload: AppData): any;
+      updateData(payload: string): any;
     };
   };
   store: {
@@ -60,6 +62,10 @@ class App extends Component<Props, State> {
     firebaseInit().once("value", snap =>
       this.setState({ firebaseData: snap.val() }, this.mapData)
     );
+  }
+
+  componentDidUpdate() {
+    console.log(this.props.store);
   }
 
   render() {
@@ -135,9 +141,11 @@ class App extends Component<Props, State> {
   };
 
   handleFavorite = (id: string) => {
-    const updatedMappedData = Object.assign({}, this.state.appData);
-    updatedMappedData[id].isFavorite = !updatedMappedData[id].isFavorite;
-    this.setState({ appData: updatedMappedData });
+    // const updatedMappedData = Object.assign({}, this.state.appData);
+    // updatedMappedData[id].isFavorite = !updatedMappedData[id].isFavorite;
+    // this.setState({ appData: updatedMappedData });
+
+    this.props.actions.parks.updateData(id);
   };
 }
 
