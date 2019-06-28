@@ -40,7 +40,6 @@ interface Props {
 }
 
 interface State {
-  appData: AppData;
   firebaseData: Park[];
   results: Park[];
   selectedPark: Park | null;
@@ -51,7 +50,6 @@ class App extends Component<Props, State> {
     super(props);
 
     this.state = {
-      appData: {},
       firebaseData: [],
       results: [],
       selectedPark: null
@@ -65,7 +63,7 @@ class App extends Component<Props, State> {
   }
 
   componentDidUpdate() {
-    console.log(this.props.store);
+    console.log(this.props.store.parks);
   }
 
   render() {
@@ -117,7 +115,6 @@ class App extends Component<Props, State> {
       mappedData[park.id] = park;
     });
 
-    this.setState({ appData: mappedData });
     this.props.actions.parks.setData(mappedData);
   }
 
@@ -127,7 +124,7 @@ class App extends Component<Props, State> {
 
   handleFormSubmit = (term: string) => {
     const searchTerm = term.toLowerCase();
-    const searchResults = Object.values(this.state.appData).filter(item => {
+    const searchResults = Object.values(this.props.store.parks).filter(item => {
       return (
         item.fullName.toLowerCase().includes(searchTerm) ||
         item.fullStates.toLowerCase().includes(searchTerm)
@@ -141,10 +138,6 @@ class App extends Component<Props, State> {
   };
 
   handleFavorite = (id: string) => {
-    // const updatedMappedData = Object.assign({}, this.state.appData);
-    // updatedMappedData[id].isFavorite = !updatedMappedData[id].isFavorite;
-    // this.setState({ appData: updatedMappedData });
-
     this.props.actions.parks.updateData(id);
   };
 }

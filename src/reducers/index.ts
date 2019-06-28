@@ -8,7 +8,6 @@ const parksReducer = (
 ) => {
   switch (action.type) {
     case "SET":
-      console.log(action.payload);
       return action.payload;
     case "UPDATE":
       if (isUpdateAction(action)) {
@@ -26,12 +25,12 @@ const parksReducer = (
   }
 };
 
-const AppReducers = combineReducers({
-  parks: parksReducer
-});
-
 function isUpdateAction(action: any): action is ActionUpdate {
   return action.type === "UPDATE";
 }
+
+const AppReducers = combineReducers({
+  parks: parksReducer
+});
 
 export default AppReducers;
