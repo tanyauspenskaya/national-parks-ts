@@ -141,6 +141,15 @@ class App extends Component<Props, State> {
 
   handleFavorite = (id: string) => {
     this.props.actions.parks.updateData(id);
+
+    const updatedSearchResults = Object.values(this.state.results).map(park => {
+      if (park.id === id) {
+        return { ...park, isFavorite: !park.isFavorite };
+      }
+      return park;
+    });
+
+    this.setState({ results: updatedSearchResults });
   };
 }
 
