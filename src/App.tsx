@@ -91,12 +91,14 @@ class App extends Component<Props, State> {
             handleFavorite={this.handleFavorite}
           />
         </Section>
-        <Section sectionClass="detail" sectionId="detail">
-          <Detail
-            selectedPark={this.state.selectedPark}
-            handleFavorite={this.handleFavorite}
-          />
-        </Section>
+        {this.state.selectedPark && (
+          <Section sectionClass="detail" sectionId="detail">
+            <Detail
+              selectedPark={parks[this.state.selectedPark.id]}
+              handleFavorite={this.handleFavorite}
+            />
+          </Section>
+        )}
         <Section sectionClass="visited" sectionId="visited">
           <VisitedList
             appData={parks}

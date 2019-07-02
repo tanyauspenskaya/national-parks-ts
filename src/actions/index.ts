@@ -6,7 +6,7 @@ export interface ActionSet {
 }
 
 export interface ActionUpdate {
-  type: string;
+  type: "UPDATE";
   payload: string;
 }
 

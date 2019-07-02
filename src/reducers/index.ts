@@ -10,24 +10,17 @@ const parksReducer = (
     case "SET":
       return action.payload;
     case "UPDATE":
-      if (isUpdateAction(action)) {
-        return {
-          ...state,
-          [action.payload]: {
-            ...state[action.payload],
-            isFavorite: !state[action.payload].isFavorite
-          }
-        };
-      }
-      return state;
+      return {
+        ...state,
+        [action.payload]: {
+          ...state[action.payload],
+          isFavorite: !state[action.payload].isFavorite
+        }
+      };
     default:
       return state;
   }
 };
-
-function isUpdateAction(action: any): action is ActionUpdate {
-  return action.type === "UPDATE";
-}
 
 const AppReducers = combineReducers({
   parks: parksReducer
