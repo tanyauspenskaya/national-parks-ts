@@ -1,67 +1,113 @@
 import React from "react";
-import { shallow } from "enzyme";
-import App from "../App";
+import { mount } from "enzyme";
+import AppRedux, { App as AppComponent } from "../App";
+import { Provider } from "react-redux";
 
-import SearchBar from "../components/SearchBar/SearchBar";
-import ResultsList from "../components/ResultsList/ResultsList";
-import Detail from "../components/Detail/Detail";
-import VisitedList from "../components/VisitedList/VisitedList";
+jest.mock("../firebase/firebase", () => {
+  const data = [
+    {
+      description:
+        "Acadia National Park protects the natural beauty of the highest rocky headlands along the Atlantic coastline of the United States, an abundance of habitats with high biodiversity, clean air and water, and a rich cultural heritage. ",
+      designation: "National Park",
+      directionsInfo:
+        "From Boston take I-95 north to Augusta, Maine, then Route 3 east to Ellsworth, and on to Mount Desert Island. ",
+      directionsUrl: "http://www.nps.gov/acad/planyourvisit/directions.htm",
+      fullName: "Acadia National Park",
+      fullStates: "Maine",
+      id: "6DA17C86-088E-4B4D-B862-7C1BD5CF236B",
+      isFavorite: false,
+      lat: "44.35",
+      long: "-68.216667",
+      name: "Acadia",
+      parkCode: "acad",
+      photoUrl: "https://firebasestorage.googleapis.com/",
+      states: "ME",
+      thumbUrl: "https://firebasestorage.googleapis.com/",
+      weatherInfo:
+        "Located on Mount Desert Island in Maine, Acadia experiences all four seasons. "
+    }
+  ];
 
-jest.mock("../components/SearchBar/SearchBar", () => {
-  return function() {
-    return null;
+  return {
+    __esModule: true,
+    default: () => ({
+      once: (arg: string, callback: (arg: any) => void) => {
+        callback({
+          val: () => {
+            return data;
+          }
+        });
+      }
+    })
   };
 });
 
-jest.mock("../components/Detail/Detail", () => {
-  return function() {
-    return null;
-  };
-});
-
-jest.mock("../components/ResultsList/ResultsList", () => {
-  return function() {
-    return null;
-  };
-});
-
-jest.mock("../components/VisitedList/VisitedList", () => {
-  return function() {
-    return null;
+jest.mock("../actions", () => {
+  return {
+    setData: () => {
+      return null;
+    }
   };
 });
 
 describe("<App />", () => {
-  describe("firebase", () => {});
+  it("<App /> gets rendered", () => {
+    const store = {
+      dispatch: jest.fn(),
+      getState: () => {
+        return {
+          parks: {}
+        };
+      },
+      replaceReducer: jest.fn(),
+      subscribe: jest.fn()
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <AppRedux />
+      </Provider>
+    );
+    expect(wrapper.find("Header").length).toBe(1);
+  });
 
-  describe("<SearchBar />", () => {
-    it("handleFormSubmit", () => {
-      const wrapper = shallow(<App />);
-      const component = wrapper.find(SearchBar);
+  describe("firebase", () => {
+    it("Actions parks setData is called with mappedData", () => {
+      const setData = jest.fn();
+      const actions = {
+        parks: {
+          setData,
+          updateData: jest.fn()
+        }
+      };
+      const store = { parks: {} };
+
+      mount(<AppComponent actions={actions} store={store} />);
+
+      const mappedData = {
+        "6DA17C86-088E-4B4D-B862-7C1BD5CF236B": {
+          description:
+            "Acadia National Park protects the natural beauty of the highest rocky headlands along the Atlantic coastline of the United States, an abundance of habitats with high biodiversity, clean air and water, and a rich cultural heritage. ",
+          designation: "National Park",
+          directionsInfo:
+            "From Boston take I-95 north to Augusta, Maine, then Route 3 east to Ellsworth, and on to Mount Desert Island. ",
+          directionsUrl: "http://www.nps.gov/acad/planyourvisit/directions.htm",
+          fullName: "Acadia National Park",
+          fullStates: "Maine",
+          id: "6DA17C86-088E-4B4D-B862-7C1BD5CF236B",
+          isFavorite: false,
+          lat: "44.35",
+          long: "-68.216667",
+          name: "Acadia",
+          parkCode: "acad",
+          photoUrl: "https://firebasestorage.googleapis.com/",
+          states: "ME",
+          thumbUrl: "https://firebasestorage.googleapis.com/",
+          weatherInfo:
+            "Located on Mount Desert Island in Maine, Acadia experiences all four seasons. "
+        }
+      };
+
+      expect(setData).toHaveBeenCalledWith(mappedData);
     });
-
-    it("handleInputClear", () => {});
-  });
-
-  describe("<ResultsList />", () => {
-    it("results", () => {});
-
-    it("handleParkSelect", () => {});
-
-    it("handleFavorite", () => {});
-  });
-
-  describe("<Detail />", () => {
-    it("selectedPark", () => {});
-
-    it("handleFavorite", () => {});
-  });
-
-  describe("<VisitedList />", () => {
-    it("appData", () => {});
-
-    it("handleParkSelect", () => {});
-
-    it("handleFavorite", () => {});
   });
 });

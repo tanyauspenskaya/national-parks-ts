@@ -45,7 +45,7 @@ interface State {
   selectedPark: Park | null;
 }
 
-class App extends Component<Props, State> {
+export class App extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -60,10 +60,6 @@ class App extends Component<Props, State> {
     firebaseInit().once("value", snap =>
       this.setState({ firebaseData: snap.val() }, this.mapData)
     );
-  }
-
-  componentDidUpdate() {
-    console.log(this.props.store.parks);
   }
 
   render() {
